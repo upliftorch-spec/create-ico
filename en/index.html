@@ -986,13 +986,13 @@ function handleFile(file) {
   hideError();
 
   if (!file.type.startsWith('image/')) {
-    trackToolEvent('tool_error', { error_type: 'invalid_file_type' });
+    ;
     showError('Please select a valid image file (PNG, JPG, GIF, etc.).');
     return;
   }
 
   if (file.size > 10 * 1024 * 1024) {
-    trackToolEvent('tool_error', { error_type: 'file_too_large' });
+    ;
     showError('File size cannot exceed 10MB. Please choose a smaller image.');
     return;
   }
@@ -1008,7 +1008,7 @@ function handleFile(file) {
     processImage(e.target.result);
   };
   reader.onerror = () => {
-    trackToolEvent('tool_error', { error_type: 'file_read_failed' });
+    ;
     showError('Failed to read the image file. Please try another file.');
   };
   reader.readAsDataURL(file);
@@ -1024,10 +1024,10 @@ function processImage(imageSrc) {
 
     processing.style.display = 'none';
     previewSection.style.display = 'block';
-    trackToolEvent('file_selected', { file_type: currentFile.type || 'image' });
+    ;
   };
   img.onerror = () => {
-    trackToolEvent('tool_error', { error_type: 'image_decode_failed' });
+    ;
     showError('Failed to load image. Please verify the file format is correct.');
   };
   img.src = imageSrc;
@@ -1174,7 +1174,7 @@ async function generateIco() {
       downloadIco.download = getFileName(currentFile.name, '.ico');
       downloadPackage.disabled = false;
     } catch (error) {
-      trackToolEvent('tool_error', { error_type: 'ico_generation_failed' });
+      ;
       showError('Failed to generate the ICO file: ' + error.message);
     }
   }
@@ -1182,13 +1182,13 @@ async function generateIco() {
 
 downloadSquare.addEventListener('click', () => {
   if (squareCanvas) {
-    trackToolEvent('export_success', { export_format: 'png' });
+    ;
   }
 });
 
 downloadIco.addEventListener('click', () => {
   if (currentIcoUrl) {
-    trackToolEvent('export_success', { export_format: 'ico' });
+    ;
   }
 });
 
@@ -1242,16 +1242,16 @@ downloadPackage.addEventListener('click', async () => {
       link.download = getFileName(currentFile.name, '-favicon-package.zip');
       link.click();
       setTimeout(() => URL.revokeObjectURL(packageUrl), 5000);
-      trackToolEvent('export_success', { export_format: 'favicon_zip' });
+      ;
     } catch (error) {
-      trackToolEvent('tool_error', { error_type: 'favicon_package_failed' });
+      ;
       showError('Failed to build the favicon package: ' + error.message);
     }
     processing.style.display = 'none';
     processingText.textContent = 'Processing image...';
     downloadPackage.disabled = false;
   } else {
-    trackToolEvent('tool_error', { error_type: squareCanvas ? 'zip_library_unavailable' : 'missing_image' });
+    ;
     showError(squareCanvas ? 'The ZIP component did not load. Check your connection and try again.' : 'Choose an image first.');
   }
 });
