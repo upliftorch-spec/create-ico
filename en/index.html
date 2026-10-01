@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://upliftorch.com/tools/create-ico/en/">
+<link rel="alternate" hreflang="zh-TW" href="https://upliftorch.com/tools/create-ico/">
+<link rel="alternate" hreflang="en" href="https://upliftorch.com/tools/create-ico/en/">
+<link rel="alternate" hreflang="x-default" href="https://upliftorch.com/tools/create-ico/en/">
+<title>PNG to ICO Converter – Free ICO &amp; Favicon Generator</title>
+<meta name="description" content="Free online ICO icon generator. Convert PNG, JPG, GIF and more to ICO format. Auto transparent background, multi-size support (16x16 to 256x256), fully browser-based for your privacy.">
+<meta name="keywords" content="ICO converter,PNG to ICO,icon generator,favicon maker,ICO format,icon converter,free tool">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f7fb;
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header Nav */
+.site-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0 20px;
+  box-shadow: 0 2px 12px rgba(102,126,234,0.3);
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.site-logo {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-logo i { font-size: 20px; }
+
+.header-nav {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.header-nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.header-nav a:hover { color: #fff; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  text-align: center;
+  padding: 48px 20px 56px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.hero p {
+  font-size: 16px;
+  opacity: 0.9;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+.breadcrumb{font-size:13px;color:var(--text-secondary,#64748b);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.breadcrumb a{color:var(--text-secondary,#64748b)}
+.breadcrumb a:hover{color:var(--primary,#ec4899)}
+.breadcrumb .sep{opacity:.5}
+.breadcrumb [aria-current]{color:var(--text,#1e293b);font-weight:600}
+
+/* Tool Card */
+.tool-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid #e8eaf0;
+  margin-top: 0;
+  position: relative;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 2px dashed #c5cad6;
+  border-radius: 14px;
+  padding: 52px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #fafbfc;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+  border-color: #667eea;
+  background: #f0f0ff;
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: #667eea;
+  margin-bottom: 16px;
+}
+
+.upload-text {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+.upload-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.upload-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+}
+
+#fileInput { display: none; }
+
+/* Preview Section */
+.preview-section {
+  display: none;
+  margin-top: 28px;
+}
+
+.preview-container {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.preview-box {
+  flex: 1;
+  min-width: 240px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #e8eaf0;
+}
+
+.preview-box.transparent-bg {
+  background: repeating-conic-gradient(#e8e8e8 0% 25%, #f5f5f5 0% 50%) 50% / 20px 20px;
+}
+
+.preview-box h3 {
+  color: #333;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.image-info {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Size Selector */
+.size-selector {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.size-selector label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.size-options {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.size-option {
+  padding: 7px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+}
+
+.size-option:hover { border-color: #667eea; color: #667eea; }
+
+.size-option.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Download Section */
+.download-section {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.download-square {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.download-ico {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+}
+
+.download-package {
+  background: #1f2937;
+  color: #fff;
+}
+
+.download-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Processing / Error */
+.processing {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+  display: none;
+}
+
+.spinner {
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-msg {
+  background: #fff0f0;
+  border: 1px solid #ffc5c5;
+  color: #cc0000;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  display: none;
+}
+
+/* Content Sections */
+.content-section {
+  margin-top: 52px;
+}
+
+.content-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Feature Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102,126,234,0.12);
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea20, #764ba220);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 22px;
+  color: #667eea;
+}
+
+.feature-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Steps */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+}
+
+.step-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* FAQ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e8eaf0;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::before {
+  content: '\25B8';
+  color: #667eea;
+  transition: transform 0.2s;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::before { transform: rotate(90deg); }
+
+.faq-item p {
+  padding: 0 18px 14px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.7;
+}
+
+/* Article Grid */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.article-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102,126,234,0.12);
+}
+
+.article-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.article-card p {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
+.article-card-more {
+  background: #f5f0ff;
+  border-style: dashed;
+  border-color: #c5b8f5;
+}
+
+.article-card-more h3 { color: #764ba2; }
+
+@media (min-width: 1360px) {
+}
+
+/* Footer */
+.site-footer {
+  background: #2d2d3a;
+  color: #aaa;
+  padding: 40px 20px 24px;
+  margin-top: 60px;
+}
+
+.footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.footer-col h4 {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.footer-col p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #999;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  color: #999;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover { color: #a78bfa; }
+
+.footer-bottom {
+  border-top: 1px solid #3d3d4e;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .hero h1 { font-size: 26px; }
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .article-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+  .header-nav { display: none; }
+  .preview-container { flex-direction: column; }
+  .download-section { flex-direction: column; align-items: center; }
+  .download-btn { width: 220px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .article-grid { grid-template-columns: 1fr; }
+  .container { padding: 20px 14px; }
+  .tool-card { padding: 20px 16px; }
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://upliftorch.com/"},{"@type":"ListItem","position":2,"name":"Free Online Tools","item":"https://upliftorch.com/tools-en"},{"@type":"ListItem","position":3,"name":"ICO Icon Generator","item":"https://upliftorch.com/tools/create-ico/en/"}]}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <i class="fa-solid fa-image"></i>
+      ICO Generator
+    </a>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/en/blog/index.html">Tutorials</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/en/about.html">About</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/en/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Free Online ICO Icon Generator</h1>
+  <p>Upload an image and instantly convert it to a transparent square PNG and multi-size ICO file. Supports PNG, JPG, GIF and more — fully processed in your browser.</p>
+</div>
+
+
+
+
+
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <a href="https://upliftorch.com/">Home</a>
+    <span class="sep">›</span>
+    <a href="https://upliftorch.com/tools-en">Free Online Tools</a>
+    <span class="sep">›</span>
+    <span aria-current="page">ICO Icon Generator</span>
+  </nav>
+
+  <!-- Tool -->
+  <div class="tool-card">
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <div class="upload-text">Drag and drop an image here, or click to select a file</div>
+      <div class="upload-hint">Supports PNG, JPG, GIF, BMP, WebP and more — max 10MB</div>
+      <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+        <i class="fa-solid fa-folder-open"></i> Choose Image
+      </button>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <div class="preview-section" id="previewSection">
+      <div class="preview-container">
+        <div class="preview-box">
+          <h3><i class="fa-regular fa-image"></i> Original Image</h3>
+          <img id="originalImage" class="preview-image" alt="Original image">
+          <div id="originalInfo" class="image-info"></div>
+        </div>
+        <div class="preview-box transparent-bg">
+          <h3><i class="fa-regular fa-square-check"></i> Square Image (Transparent)</h3>
+          <img id="squareImage" class="preview-image" alt="Square image">
+          <div id="squareInfo" class="image-info"></div>
+        </div>
+      </div>
+
+      <div class="size-selector">
+        <label>Select ICO output size:</label>
+        <div class="size-options">
+          <div class="size-option" data-size="16">16×16</div>
+          <div class="size-option" data-size="32">32×32</div>
+          <div class="size-option" data-size="48">48×48</div>
+          <div class="size-option" data-size="64">64×64</div>
+          <div class="size-option" data-size="128">128×128</div>
+          <div class="size-option" data-size="256">256×256</div>
+        </div>
+      </div>
+
+      <div class="download-section">
+        <a id="downloadSquare" class="download-btn download-square" href="#" download>
+          <i class="fa-solid fa-download"></i> Download Square PNG (Transparent)
+        </a>
+        <a id="downloadIco" class="download-btn download-ico" href="#" download>
+          <i class="fa-solid fa-file-image"></i> Download ICO File
+        </a>
+        <button id="downloadPackage" class="download-btn download-package" type="button" disabled>
+          <i class="fa-solid fa-box-archive"></i> Download Favicon Package (.zip)
+        </button>
+      </div>
+    </div>
+
+    <div id="processing" class="processing">
+      <div class="spinner"></div>
+      <div id="processingText">Processing image...</div>
+    </div>
+
+    <div id="errorMsg" class="error-msg"></div>
+  </div>
+
+  
+
+  <!-- Features -->
+  <section class="content-section" id="features">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+        <h3>Completely Free</h3>
+        <p>No payment, no registration, no usage limits. All features are free for everyone to use immediately.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Browser-Based, Privacy Safe</h3>
+        <p>All image processing happens entirely in your browser. Files are never uploaded to any server. Your images never leave your device.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+        <h3>Complete Favicon Package</h3>
+        <p>Download a ZIP with a multi-size ICO, browser PNGs, Apple touch icon, Android icons, a maskable icon, manifest, and ready-to-paste HTML.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h3>Transparent Background</h3>
+        <p>Automatically preserves transparent backgrounds when converting to square format. Both ICO and PNG outputs support full alpha transparency.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>Auto Center Crop</h3>
+        <p>Automatically centers and crops any aspect ratio image into a perfect square, keeping the content intact for clean, professional icons.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
+        <h3>Instant Preview</h3>
+        <p>After uploading, instantly see a side-by-side preview of the original and processed square image before downloading.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use -->
+  <section class="content-section" id="how-to-use">
+    <h2>How to Use the ICO Icon Generator</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Upload Your Image</h3>
+          <p>Click "Choose Image" or drag and drop your image into the upload area. Supports PNG, JPG, GIF, BMP, WebP and other common formats. Max file size is 10MB.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Preview the Result</h3>
+          <p>The tool automatically converts your image to a square with a transparent background. A checkerboard pattern shows the transparent areas so you can verify the result.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Choose ICO Size</h3>
+          <p>Select the ICO size from 16×16 to 256×256. Favicons typically use 16×16 or 32×32. For application icons, 48×48 or larger is recommended.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Download the Format You Need</h3>
+          <p>Download one ICO size, the transparent square PNG, or a complete favicon ZIP ready for a website project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What is the ICO format?</summary>
+        <p>ICO (Icon) is the icon format used by Windows, with the file extension .ico. It can contain multiple image sizes so the operating system can automatically pick the most appropriate size for each display context. ICO is also widely used for website favicons (the small icon shown in browser tabs).</p>
+      </details>
+      <details class="faq-item">
+        <summary>What are the common uses of ICO files?</summary>
+        <p>ICO files are mainly used for: website favicons (shown in browser tabs and bookmarks), Windows desktop and application icons, custom Windows folder icons, and executable (.exe) program icons.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What image formats can I upload?</summary>
+        <p>This tool supports all image formats that browsers can display, including PNG, JPG/JPEG, GIF, BMP, WebP, SVG, and more. PNG is recommended as the source image for the best transparent background results.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the maximum image size supported?</summary>
+        <p>This tool supports image files up to 10MB. There is no strict resolution limit, but using a source image of at least 256×256 is recommended so your ICO retains sharp detail when scaled down.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this tool free? Are there usage limits?</summary>
+        <p>Completely free with no usage limits. No account registration or email address required. You can use this tool as many times as you like.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will my images be uploaded to a server? Is it safe?</summary>
+        <p>No. All image processing is done entirely in your browser using the HTML5 Canvas API and FileReader API. Your images are never sent to any server. When you close the tab, all data is immediately cleared.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I create an ICO file with multiple sizes?</summary>
+        <p>Use “Download Favicon Package.” Its favicon.ico contains 16×16, 32×32, and 48×48 images, while the ZIP also includes modern browser, Apple touch, Android, and maskable PNG icons.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will the converted image lose quality?</summary>
+        <p>The conversion uses a high-quality bilinear interpolation scaling algorithm to preserve maximum detail when resizing. For best results, use a source image of at least 256×256 pixels to avoid quality loss from upscaling.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="content-section" id="guides">
+    <h2>ICO &amp; Icon Design Tutorials</h2>
+    <div class="article-grid">
+      <a href="https://upliftorch.com/tools/create-ico/en/blog/ico-guide.html" class="article-card">
+        <h3>The Complete ICO Format Guide</h3>
+        <p>A deep dive into the ICO format's structure, use cases, and best practices — from technical details to real-world applications.</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/en/blog/favicon-tutorial.html" class="article-card">
+        <h3>How to Set a Favicon for Your Website</h3>
+        <p>Complete tutorial: from creating an ICO file to correctly setting up favicons in HTML, including all browser-compatible tags.</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/en/blog/icon-design-tips.html" class="article-card">
+        <h3>Icon Design Tips &amp; Best Practices</h3>
+        <p>Key principles of professional icon design so your app icon looks sharp and recognizable at every size.</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/en/blog/ico-vs-png.html" class="article-card">
+        <h3>ICO vs PNG vs SVG: Format Comparison</h3>
+        <p>A thorough comparison of three icon formats to help you choose the best one for your use case.</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/en/blog/index.html" class="article-card article-card-more">
+        <h3>View All Articles &rarr;</h3>
+        <p>More icon design tips and ICO format tutorials.</p>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /.container -->
+
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>ICO Icon Generator</h4>
+        <p>Free online tool to quickly convert PNG, JPG and other images to ICO format. All processing done in your browser to protect your privacy.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">ICO Icon Generator</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/blog/index.html">Tutorials</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/blog/ico-guide.html">ICO Format Guide</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/blog/favicon-tutorial.html">Favicon Tutorial</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/about.html">About Us</a></li>
+          <li><a href="https://upliftorch.com/privacy-policy?lang=en">Privacy Policy</a></li>
+          <li><a href="https://upliftorch.com/terms-of-service?lang=en">Terms of Service</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/contact.html">Contact</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/en/blog/index.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="current-year"></span> Upliftorch. All rights reserved.</p>
+      <p style="margin-top:6px;">All image processing is done entirely in your browser — no files are ever uploaded.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);text-align:center;font-size:13px;">
+      <span style="color:#888;">Other Tools:</span>
+      <a href="https://upliftorch.com/tools/mp3-cutter/en/" style="color:#999;text-decoration:none;margin:0 6px;">MP3 Cutter</a>·
+      <a href="https://upliftorch.com/tools/convert-to-webp/en/" style="color:#999;text-decoration:none;margin:0 6px;">WebP Converter</a>·
+      <a href="https://upliftorch.com/tools/url-codec/en/" style="color:#999;text-decoration:none;margin:0 6px;">URL Codec</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+document.querySelectorAll('.current-year').forEach(year => {
+  year.textContent = new Date().getFullYear();
+});
+
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const previewSection = document.getElementById('previewSection');
+const originalImage = document.getElementById('originalImage');
+const squareImage = document.getElementById('squareImage');
+const originalInfo = document.getElementById('originalInfo');
+const squareInfo = document.getElementById('squareInfo');
+const downloadSquare = document.getElementById('downloadSquare');
+const downloadIco = document.getElementById('downloadIco');
+const downloadPackage = document.getElementById('downloadPackage');
+const processing = document.getElementById('processing');
+const processingText = document.getElementById('processingText');
+const errorMsg = document.getElementById('errorMsg');
+const sizeOptions = document.querySelectorAll('.size-option');
+
+let currentFile = null;
+let squareCanvas = null;
+let selectedSize = 32;
+let currentIcoUrl = null;
+
+
+
+// Init default selected size
+document.querySelector('.size-option[data-size="32"]').classList.add('selected');
+
+// Drag and drop
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    handleFile(files[0]);
+  }
+});
+
+// File input
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) {
+    handleFile(e.target.files[0]);
+  }
+});
+
+// Size selection
+sizeOptions.forEach(option => {
+  option.addEventListener('click', () => {
+    sizeOptions.forEach(opt => opt.classList.remove('selected'));
+    option.classList.add('selected');
+    selectedSize = parseInt(option.dataset.size);
+    if (squareCanvas) {
+      generateIco();
+    }
+  });
+});
+
+function showError(message) {
+  errorMsg.textContent = message;
+  errorMsg.style.display = 'block';
+  processing.style.display = 'none';
+}
+
+function hideError() {
+  errorMsg.style.display = 'none';
+}
+
+function handleFile(file) {
+  hideError();
+
+  if (!file.type.startsWith('image/')) {
+    trackToolEvent('tool_error', { error_type: 'invalid_file_type' });
+    showError('Please select a valid image file (PNG, JPG, GIF, etc.).');
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    trackToolEvent('tool_error', { error_type: 'file_too_large' });
+    showError('File size cannot exceed 10MB. Please choose a smaller image.');
+    return;
+  }
+
+  currentFile = file;
+  processing.style.display = 'block';
+  processingText.textContent = 'Processing image...';
+  previewSection.style.display = 'none';
+  downloadPackage.disabled = true;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    processImage(e.target.result);
+  };
+  reader.onerror = () => {
+    trackToolEvent('tool_error', { error_type: 'file_read_failed' });
+    showError('Failed to read the image file. Please try another file.');
+  };
+  reader.readAsDataURL(file);
+}
+
+function processImage(imageSrc) {
+  const img = new Image();
+  img.onload = () => {
+    originalImage.src = imageSrc;
+    originalInfo.textContent = `Size: ${img.width} × ${img.height} px`;
+
+    createSquareImage(img);
+
+    processing.style.display = 'none';
+    previewSection.style.display = 'block';
+    trackToolEvent('file_selected', { file_type: currentFile.type || 'image' });
+  };
+  img.onerror = () => {
+    trackToolEvent('tool_error', { error_type: 'image_decode_failed' });
+    showError('Failed to load image. Please verify the file format is correct.');
+  };
+  img.src = imageSrc;
+}
+
+function removeBackground(canvas) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const imageData = ctx.getImageData(0, 0, w, h);
+  const data = imageData.data;
+
+  const edgePixels = [];
+  for (let x = 0; x < w; x++) {
+    edgePixels.push((0 * w + x) * 4);
+    edgePixels.push(((h - 1) * w + x) * 4);
+  }
+  for (let y = 1; y < h - 1; y++) {
+    edgePixels.push((y * w + 0) * 4);
+    edgePixels.push((y * w + (w - 1)) * 4);
+  }
+
+  const colorCount = {};
+  let topColor = null;
+  let topCount = 0;
+  edgePixels.forEach(i => {
+    if (data[i + 3] < 128) return;
+    const key = data[i] + ',' + data[i + 1] + ',' + data[i + 2];
+    colorCount[key] = (colorCount[key] || 0) + 1;
+    if (colorCount[key] > topCount) {
+      topCount = colorCount[key];
+      topColor = [data[i], data[i + 1], data[i + 2]];
+    }
+  });
+
+  if (!topColor || topCount < edgePixels.length * 0.3) return;
+
+  const tolerance = 35;
+  for (let i = 0; i < data.length; i += 4) {
+    const dr = data[i] - topColor[0];
+    const dg = data[i + 1] - topColor[1];
+    const db = data[i + 2] - topColor[2];
+    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+    if (dist < tolerance) {
+      data[i + 3] = 0;
+    } else if (dist < tolerance * 2) {
+      const alpha = Math.round((dist - tolerance) / tolerance * data[i + 3]);
+      data[i + 3] = Math.min(data[i + 3], alpha);
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
+function createSquareImage(img) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const maxDimension = Math.max(img.width, img.height);
+  canvas.width = maxDimension;
+  canvas.height = maxDimension;
+
+  const x = (maxDimension - img.width) / 2;
+  const y = (maxDimension - img.height) / 2;
+  ctx.drawImage(img, x, y, img.width, img.height);
+
+  removeBackground(canvas);
+
+  squareCanvas = canvas;
+
+  const squareDataUrl = canvas.toDataURL('image/png');
+  squareImage.src = squareDataUrl;
+  squareInfo.textContent = `Size: ${maxDimension} × ${maxDimension} px (background removed)`;
+
+  downloadSquare.href = squareDataUrl;
+  downloadSquare.download = getFileName(currentFile.name, '_square.png');
+
+  generateIco();
+}
+
+function renderPngBlob(size, options = {}) {
+  const outputCanvas = document.createElement('canvas');
+  const outputContext = outputCanvas.getContext('2d');
+  const padding = Math.round(size * (options.paddingRatio || 0));
+  outputCanvas.width = size;
+  outputCanvas.height = size;
+  outputContext.imageSmoothingEnabled = true;
+  outputContext.imageSmoothingQuality = 'high';
+  if (options.background) {
+    outputContext.fillStyle = options.background;
+    outputContext.fillRect(0, 0, size, size);
+  }
+  outputContext.drawImage(squareCanvas, padding, padding, size - padding * 2, size - padding * 2);
+
+  return new Promise((resolve, reject) => {
+    outputCanvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob);
+      } else {
+        reject(new Error('The browser could not create a PNG image'));
+      }
+    }, 'image/png');
+  });
+}
+
+async function buildIcoBlob(sizes) {
+  const pngBuffers = await Promise.all(sizes.map(async (size) => {
+    const blob = await renderPngBlob(size);
+    return new Uint8Array(await blob.arrayBuffer());
+  }));
+  const directorySize = 6 + sizes.length * 16;
+  const directory = new ArrayBuffer(directorySize);
+  const view = new DataView(directory);
+  let imageOffset = directorySize;
+  view.setUint16(0, 0, true);
+  view.setUint16(2, 1, true);
+  view.setUint16(4, sizes.length, true);
+
+  sizes.forEach((size, index) => {
+    const entryOffset = 6 + index * 16;
+    const pngBytes = pngBuffers[index];
+    view.setUint8(entryOffset, size >= 256 ? 0 : size);
+    view.setUint8(entryOffset + 1, size >= 256 ? 0 : size);
+    view.setUint8(entryOffset + 2, 0);
+    view.setUint8(entryOffset + 3, 0);
+    view.setUint16(entryOffset + 4, 1, true);
+    view.setUint16(entryOffset + 6, 32, true);
+    view.setUint32(entryOffset + 8, pngBytes.length, true);
+    view.setUint32(entryOffset + 12, imageOffset, true);
+    imageOffset += pngBytes.length;
+  });
+
+  return new Blob([directory, ...pngBuffers], { type: 'image/x-icon' });
+}
+
+async function generateIco() {
+  if (squareCanvas) {
+    try {
+      const icoBlob = await buildIcoBlob([selectedSize]);
+      if (currentIcoUrl) {
+        URL.revokeObjectURL(currentIcoUrl);
+      }
+      currentIcoUrl = URL.createObjectURL(icoBlob);
+      downloadIco.href = currentIcoUrl;
+      downloadIco.download = getFileName(currentFile.name, '.ico');
+      downloadPackage.disabled = false;
+    } catch (error) {
+      trackToolEvent('tool_error', { error_type: 'ico_generation_failed' });
+      showError('Failed to generate the ICO file: ' + error.message);
+    }
+  }
+}
+
+downloadSquare.addEventListener('click', () => {
+  if (squareCanvas) {
+    trackToolEvent('export_success', { export_format: 'png' });
+  }
+});
+
+downloadIco.addEventListener('click', () => {
+  if (currentIcoUrl) {
+    trackToolEvent('export_success', { export_format: 'ico' });
+  }
+});
+
+downloadPackage.addEventListener('click', async () => {
+  if (squareCanvas && window.JSZip) {
+    downloadPackage.disabled = true;
+    processing.style.display = 'block';
+    processingText.textContent = 'Building the favicon package...';
+    hideError();
+    try {
+      const zip = new window.JSZip();
+      const [faviconIco, favicon16, favicon32, appleTouch, android192, android512, maskable512] = await Promise.all([
+        buildIcoBlob([16, 32, 48]),
+        renderPngBlob(16),
+        renderPngBlob(32),
+        renderPngBlob(180),
+        renderPngBlob(192),
+        renderPngBlob(512),
+        renderPngBlob(512, { paddingRatio: 0.2, background: '#ffffff' })
+      ]);
+      const manifest = {
+        name: 'Website',
+        short_name: 'Website',
+        icons: [
+          { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: '/maskable-icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+        ],
+        theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone'
+      };
+      const snippet = `<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">\n<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">\n<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">\n<link rel="manifest" href="/site.webmanifest">\n`;
+      const readme = 'Favicon package generated locally in your browser.\n\nCopy these files to your website root, paste favicon-snippet.html into <head>, and update the manifest name, theme color, and paths for your site.\nThe maskable icon uses a white background and extra safe-area padding.\n';
+
+      zip.file('favicon.ico', faviconIco);
+      zip.file('favicon-16x16.png', favicon16);
+      zip.file('favicon-32x32.png', favicon32);
+      zip.file('apple-touch-icon.png', appleTouch);
+      zip.file('android-chrome-192x192.png', android192);
+      zip.file('android-chrome-512x512.png', android512);
+      zip.file('maskable-icon-512x512.png', maskable512);
+      zip.file('site.webmanifest', JSON.stringify(manifest, null, 2) + '\n');
+      zip.file('favicon-snippet.html', snippet);
+      zip.file('README.txt', readme);
+
+      const packageBlob = await zip.generateAsync({ type: 'blob' });
+      const packageUrl = URL.createObjectURL(packageBlob);
+      const link = document.createElement('a');
+      link.href = packageUrl;
+      link.download = getFileName(currentFile.name, '-favicon-package.zip');
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(packageUrl), 5000);
+      trackToolEvent('export_success', { export_format: 'favicon_zip' });
+    } catch (error) {
+      trackToolEvent('tool_error', { error_type: 'favicon_package_failed' });
+      showError('Failed to build the favicon package: ' + error.message);
+    }
+    processing.style.display = 'none';
+    processingText.textContent = 'Processing image...';
+    downloadPackage.disabled = false;
+  } else {
+    trackToolEvent('tool_error', { error_type: squareCanvas ? 'zip_library_unavailable' : 'missing_image' });
+    showError(squareCanvas ? 'The ZIP component did not load. Check your connection and try again.' : 'Choose an image first.');
+  }
+});
+
+function getFileName(originalName, suffix) {
+  const lastDotIndex = originalName.lastIndexOf('.');
+  if (lastDotIndex === -1) {
+    return originalName + suffix;
+  }
+  return originalName.substring(0, lastDotIndex) + suffix;
+}
+</script>
+
+    
+    
+<script>document.querySelectorAll(".current-year").forEach(function (el) { el.textContent = new Date().getFullYear(); });</script>
+
+<footer class="open-source-attribution" style="padding:24px;text-align:center"><a href="https://upliftorch.com/">Upliftorch</a> · <a href="https://upliftorch.com/tools/create-ico/">Official demo / 線上工具</a></footer>
+</body>
+</html>

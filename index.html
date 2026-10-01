@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  
+<meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://upliftorch.com/tools/create-ico/">
+<link rel="alternate" hreflang="zh-TW" href="https://upliftorch.com/tools/create-ico/">
+<link rel="alternate" hreflang="en" href="https://upliftorch.com/tools/create-ico/en/">
+<link rel="alternate" hreflang="x-default" href="https://upliftorch.com/tools/create-ico/en/">
+<title>PNG 轉 ICO｜免費線上 ICO 與 Favicon 產生器 - Upliftorch</title>
+<meta name="description" content="免費將 PNG、JPG、WebP 等圖片轉成 ICO 或 Favicon，支援 16×16 至 256×256 尺寸。檔案在瀏覽器本機處理，免上傳、免安裝、免註冊。">
+<meta name="keywords" content="ICO轉換,PNG轉ICO,圖示產生器,favicon製作,ICO格式,圖示轉換,免費工具">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f7fb;
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header Nav */
+.site-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0 20px;
+  box-shadow: 0 2px 12px rgba(102,126,234,0.3);
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.site-logo {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-logo i { font-size: 20px; }
+
+.header-nav {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.header-nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.header-nav a:hover { color: #fff; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  text-align: center;
+  padding: 48px 20px 56px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.hero p {
+  font-size: 16px;
+  opacity: 0.9;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+.breadcrumb{font-size:13px;color:var(--text-secondary,#64748b);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.breadcrumb a{color:var(--text-secondary,#64748b)}
+.breadcrumb a:hover{color:var(--primary,#ec4899)}
+.breadcrumb .sep{opacity:.5}
+.breadcrumb [aria-current]{color:var(--text,#1e293b);font-weight:600}
+
+/* Tool Card */
+.tool-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid #e8eaf0;
+  margin-top: 0;
+  position: relative;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 2px dashed #c5cad6;
+  border-radius: 14px;
+  padding: 52px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #fafbfc;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+  border-color: #667eea;
+  background: #f0f0ff;
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: #667eea;
+  margin-bottom: 16px;
+}
+
+.upload-text {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+.upload-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.upload-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+}
+
+#fileInput { display: none; }
+
+/* Preview Section */
+.preview-section {
+  display: none;
+  margin-top: 28px;
+}
+
+.preview-container {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.preview-box {
+  flex: 1;
+  min-width: 240px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #e8eaf0;
+}
+
+.preview-box.transparent-bg {
+  background: repeating-conic-gradient(#e8e8e8 0% 25%, #f5f5f5 0% 50%) 50% / 20px 20px;
+}
+
+.preview-box h3 {
+  color: #333;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.image-info {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Size Selector */
+.size-selector {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.size-selector label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.size-options {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.size-option {
+  padding: 7px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+}
+
+.size-option:hover { border-color: #667eea; color: #667eea; }
+
+.size-option.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Download Section */
+.download-section {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.download-square {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.download-ico {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Processing / Error */
+.processing {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+  display: none;
+}
+
+.spinner {
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-msg {
+  background: #fff0f0;
+  border: 1px solid #ffc5c5;
+  color: #cc0000;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  display: none;
+}
+
+/* Content Sections */
+.content-section {
+  margin-top: 52px;
+}
+
+.content-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Feature Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102,126,234,0.12);
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea20, #764ba220);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 22px;
+  color: #667eea;
+}
+
+.feature-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Steps */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+}
+
+.step-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* FAQ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e8eaf0;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::before {
+  content: '\25B8';
+  color: #667eea;
+  transition: transform 0.2s;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::before { transform: rotate(90deg); }
+
+.faq-item p {
+  padding: 0 18px 14px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.7;
+}
+
+/* Article Grid */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.article-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e8eaf0;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102,126,234,0.12);
+}
+
+.article-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.article-card p {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
+.article-card-more {
+  background: #f5f0ff;
+  border-style: dashed;
+  border-color: #c5b8f5;
+}
+
+.article-card-more h3 { color: #764ba2; }
+
+@media (min-width: 1360px) {
+}
+
+/* Footer */
+.site-footer {
+  background: #2d2d3a;
+  color: #aaa;
+  padding: 40px 20px 24px;
+  margin-top: 60px;
+}
+
+.footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.footer-col h4 {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.footer-col p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #999;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  color: #999;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover { color: #a78bfa; }
+
+.footer-bottom {
+  border-top: 1px solid #3d3d4e;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .hero h1 { font-size: 26px; }
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .article-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+  .header-nav { display: none; }
+  .preview-container { flex-direction: column; }
+  .download-section { flex-direction: column; align-items: center; }
+  .download-btn { width: 220px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .article-grid { grid-template-columns: 1fr; }
+  .container { padding: 20px 14px; }
+  .tool-card { padding: 20px 16px; }
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://upliftorch.com/"},{"@type":"ListItem","position":2,"name":"免費線上工具","item":"https://upliftorch.com/tools"},{"@type":"ListItem","position":3,"name":"ICO 圖示產生器","item":"https://upliftorch.com/tools/create-ico/"}]}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <i class="fa-solid fa-image"></i>
+      ICO 產生器
+    </a>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="index.html">工具首頁</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/blog/index.html">教學文章</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/about.html">關於我們</a></li>
+        <li><a href="https://upliftorch.com/tools/create-ico/contact.html">聯絡我們</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>免費線上 PNG 轉 ICO 產生器</h1>
+  <p>上傳圖片，一鍵轉換為去背正方形並產生多尺寸 ICO 圖示檔案。支援 PNG、JPG、GIF 等格式，完全在瀏覽器中處理。</p>
+</div>
+
+
+
+
+
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="麵包屑導覽">
+    <a href="https://upliftorch.com/">首頁</a>
+    <span class="sep">›</span>
+    <a href="https://upliftorch.com/tools">免費線上工具</a>
+    <span class="sep">›</span>
+    <span aria-current="page">ICO 圖示產生器</span>
+  </nav>
+
+  <!-- Tool -->
+  <div class="tool-card">
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <div class="upload-text">拖放圖片到這裡，或點擊選擇檔案</div>
+      <div class="upload-hint">支援 PNG、JPG、GIF、BMP、WebP 等格式，最大 10MB</div>
+      <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+        <i class="fa-solid fa-folder-open"></i> 選擇圖片
+      </button>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <div class="preview-section" id="previewSection">
+      <div class="preview-container">
+        <div class="preview-box">
+          <h3><i class="fa-regular fa-image"></i> 原始圖片</h3>
+          <img id="originalImage" class="preview-image" alt="原始圖片">
+          <div id="originalInfo" class="image-info"></div>
+        </div>
+        <div class="preview-box transparent-bg">
+          <h3><i class="fa-regular fa-square-check"></i> 正方形圖片（去背）</h3>
+          <img id="squareImage" class="preview-image" alt="正方形圖片">
+          <div id="squareInfo" class="image-info"></div>
+        </div>
+      </div>
+
+      <div class="size-selector">
+        <label>選擇 ICO 輸出尺寸：</label>
+        <div class="size-options">
+          <div class="size-option" data-size="16">16×16</div>
+          <div class="size-option" data-size="32">32×32</div>
+          <div class="size-option" data-size="48">48×48</div>
+          <div class="size-option" data-size="64">64×64</div>
+          <div class="size-option" data-size="128">128×128</div>
+          <div class="size-option" data-size="256">256×256</div>
+        </div>
+      </div>
+
+      <div class="download-section">
+        <a id="downloadSquare" class="download-btn download-square" href="#" download>
+          <i class="fa-solid fa-download"></i> 下載正方形 PNG（去背）
+        </a>
+        <a id="downloadIco" class="download-btn download-ico" href="#" download>
+          <i class="fa-solid fa-file-image"></i> 下載 ICO 檔案
+        </a>
+      </div>
+    </div>
+
+    <div id="processing" class="processing">
+      <div class="spinner"></div>
+      <div>正在處理圖片...</div>
+    </div>
+
+    <div id="errorMsg" class="error-msg"></div>
+  </div>
+
+  
+
+  <!-- Features -->
+  <section class="content-section" id="features">
+    <h2>功能特色</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+        <h3>完全免費使用</h3>
+        <p>無需付費，無需註冊帳號，無使用次數限制。所有功能完全免費，任何人都可以立即使用。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>瀏覽器處理，隱私安全</h3>
+        <p>所有圖片處理完全在您的瀏覽器中進行，檔案不會上傳至任何伺服器。您的圖片永遠不會離開您的裝置。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+        <h3>多尺寸支援</h3>
+        <p>支援 16×16、32×32、48×48、64×64、128×128、256×256 等標準 ICO 尺寸，滿足各種使用場景。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h3>透明背景保留</h3>
+        <p>自動處理圖片為正方形時保留透明背景，生成的 ICO 和 PNG 檔案皆支援透明度，適合圖示設計。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>自動裁切置中</h3>
+        <p>自動將任意比例的圖片置中裁切為正方形，保留圖片的完整內容，讓圖示看起來更加整齊專業。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
+        <h3>即時預覽效果</h3>
+        <p>上傳圖片後立即顯示原始圖片與處理後的正方形預覽，讓您在下載前確認轉換結果是否符合需求。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use -->
+  <section class="content-section" id="how-to-use">
+    <h2>如何使用 ICO 圖示產生器</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>上傳圖片</h3>
+          <p>點擊「選擇圖片」按鈕，或直接將圖片拖放到上傳區域。支援 PNG、JPG、GIF、BMP、WebP 等常見格式，單檔最大 10MB。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>預覽處理結果</h3>
+          <p>工具會自動將圖片處理為正方形並去除多餘背景，以棋盤格顯示透明背景的預覽效果，讓您確認處理結果。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>選擇 ICO 尺寸</h3>
+          <p>從 16×16 到 256×256 選擇您需要的 ICO 尺寸。Favicon 一般使用 16×16 或 32×32，應用程式圖示建議 48×48 或更大。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>下載 ICO 或 PNG 檔案</h3>
+          <p>點擊「下載 ICO 檔案」即可取得標準 ICO 格式，或點擊「下載正方形 PNG」取得透明背景的方形圖片，適合進一步編輯。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section" id="faq">
+    <h2>常見問題</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>什麼是 ICO 格式？</summary>
+        <p>ICO（Icon）是 Windows 系統使用的圖示格式，副檔名為 .ico。它可以包含多種尺寸的圖片，讓作業系統根據顯示環境自動選擇適合的尺寸。ICO 格式也廣泛用於網頁的 Favicon（瀏覽器分頁圖示）。</p>
+      </details>
+      <details class="faq-item">
+        <summary>ICO 格式有哪些用途？</summary>
+        <p>ICO 格式主要用於以下場景：網頁 Favicon（顯示在瀏覽器分頁和書籤列）、Windows 桌面圖示和應用程式圖示、Windows 資料夾自訂圖示，以及可執行檔（.exe）的程式圖示。</p>
+      </details>
+      <details class="faq-item">
+        <summary>支援哪些圖片格式上傳？</summary>
+        <p>本工具支援所有瀏覽器可顯示的圖片格式，包括 PNG、JPG/JPEG、GIF、BMP、WebP、SVG 等。建議使用 PNG 格式作為來源圖片，可獲得最佳的透明背景效果。</p>
+      </details>
+      <details class="faq-item">
+        <summary>圖片最大可以是多少尺寸？</summary>
+        <p>本工具支援最大 10MB 的圖片檔案，圖片解析度沒有嚴格限制。不過建議使用 256×256 或以上的高解析度圖片，這樣縮小後的 ICO 圖示也能保持清晰的細節。</p>
+      </details>
+      <details class="faq-item">
+        <summary>這個工具是免費的嗎？有使用次數限制嗎？</summary>
+        <p>完全免費使用，沒有任何使用次數限制，也不需要註冊帳號或提供電子郵件。您可以無限次使用本工具轉換圖片。</p>
+      </details>
+      <details class="faq-item">
+        <summary>我的圖片會被上傳到伺服器嗎？安全嗎？</summary>
+        <p>不會。本工具的所有圖片處理都在您的瀏覽器（客戶端）中進行，利用 HTML5 Canvas API 直接在裝置上完成轉換。您的圖片不會被上傳到任何伺服器，關閉分頁後所有資料立即消失。</p>
+      </details>
+      <details class="faq-item">
+        <summary>如何製作包含多個尺寸的 ICO 檔案？</summary>
+        <p>目前本工具每次可下載單一尺寸的 ICO 檔案。如需包含多個尺寸的 ICO 檔案（標準 Favicon 通常包含 16×16 和 32×32），您可以分別下載再使用 ICO 合併工具進行組合，或使用 16×32 最常用的尺寸即可滿足大多數需求。</p>
+      </details>
+      <details class="faq-item">
+        <summary>轉換後的圖片會失真嗎？</summary>
+        <p>轉換過程使用高品質的雙線性插值縮放算法，可在縮小圖片時保留最多的細節。為確保最佳效果，建議使用解析度至少 256×256 的原始圖片，避免將低解析度圖片放大後再縮小。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="content-section" id="guides">
+    <h2>ICO 與圖示設計教學</h2>
+    <div class="article-grid">
+      <a href="https://upliftorch.com/tools/create-ico/blog/ico-guide.html" class="article-card">
+        <h3>ICO 格式完整指南</h3>
+        <p>深入了解 ICO 格式的結構、用途與最佳實踐，從技術細節到實際應用場景。</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/blog/favicon-tutorial.html" class="article-card">
+        <h3>如何為網站設定 Favicon</h3>
+        <p>完整教學：從製作 ICO 檔案到在 HTML 中正確設定 Favicon，包括所有瀏覽器相容寫法。</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/blog/icon-design-tips.html" class="article-card">
+        <h3>圖示設計技巧與最佳實踐</h3>
+        <p>專業圖示設計的重要原則，讓您的 App 圖示在各種尺寸下都清晰易辨。</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/blog/ico-vs-png.html" class="article-card">
+        <h3>ICO vs PNG vs SVG 格式比較</h3>
+        <p>三種圖示格式的優缺點分析，幫您選擇最適合使用場景的圖示格式。</p>
+      </a>
+      <a href="https://upliftorch.com/tools/create-ico/blog/index.html" class="article-card article-card-more">
+        <h3>查看所有文章 &rarr;</h3>
+        <p>更多圖示設計技巧與 ICO 格式相關教學文章。</p>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /.container -->
+
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>ICO 圖示產生器</h4>
+        <p>免費線上工具，快速將 PNG、JPG 等圖片轉換為 ICO 格式。所有處理在瀏覽器中完成，保護您的隱私。</p>
+      </div>
+      <div class="footer-col">
+        <h4>工具導覽</h4>
+        <ul>
+          <li><a href="index.html">ICO 圖示產生器</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/blog/index.html">教學文章</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/blog/ico-guide.html">ICO 格式指南</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/blog/favicon-tutorial.html">Favicon 設定教學</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>關於</h4>
+        <ul>
+          <li><a href="https://upliftorch.com/tools/create-ico/about.html">關於我們</a></li>
+          <li><a href="https://upliftorch.com/privacy-policy">隱私權政策</a></li>
+          <li><a href="https://upliftorch.com/terms-of-service">服務條款</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/contact.html">聯絡我們</a></li>
+          <li><a href="https://upliftorch.com/tools/create-ico/blog/index.html">部落格</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span class="current-year"></span> Upliftorch（萍晹科技有限公司）. All rights reserved.</p>
+      <p style="margin-top:6px;">所有圖片處理皆在您的瀏覽器中完成，不會上傳任何檔案。</p>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);text-align:center;font-size:13px;">
+      <span style="color:#888;">其他工具：</span>
+      <a href="https://upliftorch.com/tools/mp3-cutter/" style="color:#999;text-decoration:none;margin:0 6px;">MP3 切割</a>·
+      <a href="https://upliftorch.com/tools/convert-to-webp/" style="color:#999;text-decoration:none;margin:0 6px;">圖片轉 WebP</a>·
+      <a href="https://upliftorch.com/tools/url-codec/" style="color:#999;text-decoration:none;margin:0 6px;">URL 編碼/解碼</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const previewSection = document.getElementById('previewSection');
+const originalImage = document.getElementById('originalImage');
+const squareImage = document.getElementById('squareImage');
+const originalInfo = document.getElementById('originalInfo');
+const squareInfo = document.getElementById('squareInfo');
+const downloadSquare = document.getElementById('downloadSquare');
+const downloadIco = document.getElementById('downloadIco');
+const processing = document.getElementById('processing');
+const errorMsg = document.getElementById('errorMsg');
+const sizeOptions = document.querySelectorAll('.size-option');
+
+let currentFile = null;
+let squareCanvas = null;
+let selectedSize = 32;
+
+// Init default selected size
+document.querySelector('.size-option[data-size="32"]').classList.add('selected');
+
+// Drag and drop
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    handleFile(files[0]);
+  }
+});
+
+// File input
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) {
+    handleFile(e.target.files[0]);
+  }
+});
+
+// Size selection
+sizeOptions.forEach(option => {
+  option.addEventListener('click', () => {
+    sizeOptions.forEach(opt => opt.classList.remove('selected'));
+    option.classList.add('selected');
+    selectedSize = parseInt(option.dataset.size);
+    if (squareCanvas) {
+      generateIco();
+    }
+  });
+});
+
+function showError(message) {
+  errorMsg.textContent = message;
+  errorMsg.style.display = 'block';
+  processing.style.display = 'none';
+}
+
+function hideError() {
+  errorMsg.style.display = 'none';
+}
+
+function handleFile(file) {
+  hideError();
+
+  if (!file.type.startsWith('image/')) {
+    showError('請選擇有效的圖片檔案（PNG、JPG、GIF 等）。');
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    showError('檔案大小不能超過 10MB，請選擇較小的圖片。');
+    return;
+  }
+
+  currentFile = file;
+  processing.style.display = 'block';
+  previewSection.style.display = 'none';
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    processImage(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function processImage(imageSrc) {
+  const img = new Image();
+  img.onload = () => {
+    originalImage.src = imageSrc;
+    originalInfo.textContent = `尺寸：${img.width} × ${img.height} px`;
+
+    createSquareImage(img);
+
+    processing.style.display = 'none';
+    previewSection.style.display = 'block';
+  };
+  img.onerror = () => {
+    showError('圖片載入失敗，請確認檔案格式是否正確。');
+  };
+  img.src = imageSrc;
+}
+
+function removeBackground(canvas) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const imageData = ctx.getImageData(0, 0, w, h);
+  const data = imageData.data;
+
+  const edgePixels = [];
+  for (let x = 0; x < w; x++) {
+    edgePixels.push((0 * w + x) * 4);
+    edgePixels.push(((h - 1) * w + x) * 4);
+  }
+  for (let y = 1; y < h - 1; y++) {
+    edgePixels.push((y * w + 0) * 4);
+    edgePixels.push((y * w + (w - 1)) * 4);
+  }
+
+  const colorCount = {};
+  let topColor = null;
+  let topCount = 0;
+  edgePixels.forEach(i => {
+    if (data[i + 3] < 128) return;
+    const key = data[i] + ',' + data[i + 1] + ',' + data[i + 2];
+    colorCount[key] = (colorCount[key] || 0) + 1;
+    if (colorCount[key] > topCount) {
+      topCount = colorCount[key];
+      topColor = [data[i], data[i + 1], data[i + 2]];
+    }
+  });
+
+  if (!topColor || topCount < edgePixels.length * 0.3) return;
+
+  const tolerance = 35;
+  for (let i = 0; i < data.length; i += 4) {
+    const dr = data[i] - topColor[0];
+    const dg = data[i + 1] - topColor[1];
+    const db = data[i + 2] - topColor[2];
+    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+    if (dist < tolerance) {
+      data[i + 3] = 0;
+    } else if (dist < tolerance * 2) {
+      const alpha = Math.round((dist - tolerance) / tolerance * data[i + 3]);
+      data[i + 3] = Math.min(data[i + 3], alpha);
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
+function createSquareImage(img) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const maxDimension = Math.max(img.width, img.height);
+  canvas.width = maxDimension;
+  canvas.height = maxDimension;
+
+  const x = (maxDimension - img.width) / 2;
+  const y = (maxDimension - img.height) / 2;
+  ctx.drawImage(img, x, y, img.width, img.height);
+
+  removeBackground(canvas);
+
+  squareCanvas = canvas;
+
+  const squareDataUrl = canvas.toDataURL('image/png');
+  squareImage.src = squareDataUrl;
+  squareInfo.textContent = `尺寸：${maxDimension} × ${maxDimension} px（已去背）`;
+
+  downloadSquare.href = squareDataUrl;
+  downloadSquare.download = getFileName(currentFile.name, '_square.png');
+
+  generateIco();
+}
+
+function generateIco() {
+  if (!squareCanvas) { return; }
+
+  const icoCanvas = document.createElement('canvas');
+  const ctx = icoCanvas.getContext('2d');
+  icoCanvas.width = selectedSize;
+  icoCanvas.height = selectedSize;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(squareCanvas, 0, 0, selectedSize, selectedSize);
+
+  icoCanvas.toBlob((pngBlob) => {
+    pngBlob.arrayBuffer().then((pngBuf) => {
+      const pngBytes = new Uint8Array(pngBuf);
+      const size = selectedSize >= 256 ? 0 : selectedSize;
+      const icoHeader = new ArrayBuffer(6 + 16);
+      const hView = new DataView(icoHeader);
+      hView.setUint16(0, 0, true);
+      hView.setUint16(2, 1, true);
+      hView.setUint16(4, 1, true);
+      hView.setUint8(6, size);
+      hView.setUint8(7, size);
+      hView.setUint8(8, 0);
+      hView.setUint8(9, 0);
+      hView.setUint16(10, 1, true);
+      hView.setUint16(12, 32, true);
+      hView.setUint32(14, pngBytes.length, true);
+      hView.setUint32(18, 22, true);
+
+      const icoBlob = new Blob([icoHeader, pngBytes], { type: 'image/x-icon' });
+      const icoUrl = URL.createObjectURL(icoBlob);
+      downloadIco.href = icoUrl;
+      downloadIco.download = getFileName(currentFile.name, '.ico');
+    });
+  }, 'image/png');
+}
+
+function getFileName(originalName, suffix) {
+  const lastDotIndex = originalName.lastIndexOf('.');
+  if (lastDotIndex === -1) {
+    return originalName + suffix;
+  }
+  return originalName.substring(0, lastDotIndex) + suffix;
+}
+</script>
+
+    
+    
+<script>document.querySelectorAll(".current-year").forEach(function (el) { el.textContent = new Date().getFullYear(); });</script>
+
+<footer class="open-source-attribution" style="padding:24px;text-align:center"><a href="https://upliftorch.com/">Upliftorch</a> · <a href="https://upliftorch.com/tools/create-ico/">Official demo / 線上工具</a></footer>
+</body>
+</html>
